@@ -1,5 +1,5 @@
 {{- if or .Values.rbac.create .Values.rbac.createClusterRole }}
-{{- $watchNs := (first .Values.sparkJobNamespace ) -}}
+{{- $watchNs := .Values.sparkJobNamespace -}}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: {{ ternary "ClusterRole" "Role" ( eq $watchNs "") }}
 metadata:
@@ -128,12 +128,12 @@ roleRef:
   kind: {{ ternary "ClusterRole" "Role" ( eq $watchNs "") }}
   name: {{ include "spark-operator.fullname" . }}
   apiGroup: rbac.authorization.k8s.io
-{{- end }}
 
 
 
 
-{{- if (neq $watchNs "") }}
+
+{{- if (ne $watchNs "") }}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
@@ -174,4 +174,5 @@ subjects:
     namespace: {{ .Release.Namespace }}
 
 
+{{- end }}
 {{- end }}
