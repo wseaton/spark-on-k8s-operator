@@ -126,7 +126,7 @@ subjects:
     namespace: {{ .Release.Namespace }}
 roleRef:
   kind: {{ ternary "ClusterRole" "Role" ( eq $watchNs "") }}
-  name: {{ include "spark-operator.fullname" . }}
+  name: {{ include "spark-operator.fullname" . }}-role
   apiGroup: rbac.authorization.k8s.io
 
 
