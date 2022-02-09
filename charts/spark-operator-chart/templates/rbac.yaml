@@ -3,7 +3,7 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: {{ ternary "ClusterRole" "Role" ( eq $watchNs "") }}
 metadata:
-  name: {{ include "spark-operator.fullname" . }}
+  name: {{ include "spark-operator.fullname" . }}-role
   annotations:
     "helm.sh/hook": pre-install
     "helm.sh/hook-delete-policy": hook-failed, before-hook-creation
@@ -114,7 +114,7 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: {{ ternary "ClusterRoleBinding" "RoleBinding" ( eq $watchNs "") }}
 metadata:
-  name: {{ include "spark-operator.fullname" . }}
+  name: {{ include "spark-operator.fullname" . }}-rb
   annotations:
     "helm.sh/hook": pre-install
     "helm.sh/hook-delete-policy": hook-failed, before-hook-creation
